@@ -21,28 +21,128 @@ namespace WindowsFormsApp1
 
         }
 
+        //private void btnSubmit_Click(object sender, EventArgs e)
+        //{
+        //    string personName = txtName.Text;
+
+        //    if (String.IsNullOrEmpty(personName) || !Regex.IsMatch(personName, @"^[a-zA-Z\s]+$"))
+        //    {
+        //        return;
+        //    } else
+        //    {
+        //        lblText.Text = "Hello " + personName + "\nWelcome In TheRiver";
+        //        txtName.BackColor = Color.Red;
+        //        lblText.ForeColor = Color.Red;
+        //        MessageBox.Show("Submited");
+        //    }
+        //    //txtName.ReadOnly = true;
+        //    btnAccept.Visible = true;
+        //    btnSubmit.Visible = false;
+        //}
+        /// <summary>
+        /// This is An update method submit button with full validation.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSubmit_Click(object sender, EventArgs e)
         {
-            string personName = txtName.Text;
-
-            if (String.IsNullOrEmpty(personName) || !Regex.IsMatch(personName, @"^[a-zA-Z\s]+$"))
+            if (!ValidateInputs())
             {
                 return;
-            } else
-            {
-                lblText.Text = "Hello " + personName + "\nWelcome In TheRiver";
-                txtName.BackColor = Color.Red;
-                lblText.ForeColor = Color.Red;
-                MessageBox.Show("Submited");
             }
-            txtName.ReadOnly = true;
+
+            // All inputs are valid, so proceed with submission
+            string personName = txtName.Text;
+
+            lblText.Text = "Hello " + personName + "\nWelcome In TheRiver";
+            txtName.BackColor = Color.Red;
+            lblText.ForeColor = Color.Red;
+            MessageBox.Show("Submitted");
+
+            // Disable form inputs and show accept button
+            DisableInputs();
             btnAccept.Visible = true;
             btnSubmit.Visible = false;
+        }
+
+        private bool ValidateInputs()
+        {
+            bool isValid = true;
+
+            // Validate name input
+            if (String.IsNullOrEmpty(txtName.Text) || !Regex.IsMatch(txtName.Text, @"^[a-zA-Z\s]+$"))
+            {
+                SetError(txtName, "Please enter a valid name (letters and spaces only)");
+                isValid = false;
+            }
+            else
+            {
+                ClearError(txtName);
+            }
+
+            // Validate email input
+            if (String.IsNullOrEmpty(txtEmail.Text) || !Regex.IsMatch(txtEmail.Text, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$"))
+            {
+                SetError(txtEmail, "Please enter a valid email address");
+                isValid = false;
+            }
+            else
+            {
+                ClearError(txtEmail);
+            }
+
+            // Validate phone input
+            if (String.IsNullOrEmpty(txtPhone.Text) || !Regex.IsMatch(txtPhone.Text, @"^[0-9]{10}$"))
+            {
+                SetError(txtPhone, "Please enter a valid 10-digit phone number");
+                isValid = false;
+            }
+            else
+            {
+                ClearError(txtPhone);
+            }
+
+            // Validate address input
+            if (String.IsNullOrEmpty(txtAddress.Text) || !Regex.IsMatch(txtAddress.Text, @"^[a-zA-Z0-9\s,'-]*$"))
+            {
+                SetError(txtAddress, "Please enter a valid address (letters, numbers, spaces, commas, apostrophes, and hyphens only)");
+                isValid = false;
+            }
+            else
+            {
+                ClearError(txtAddress);
+            }
+
+            return isValid;
+        }
+
+
+        private void SetError(Control control, string message)
+        {
+            errorProvider.SetError(control, message);
+            control.BackColor = Color.LightPink;
+        }
+
+        private void ClearError(Control control)
+        {
+            errorProvider.SetError(control, "");
+            control.BackColor = SystemColors.Window;
+        }
+
+        private void DisableInputs()
+        {
+            txtName.ReadOnly = true;
+            txtEmail.ReadOnly = true;
+            txtPhone.ReadOnly = true;
+            txtAddress.ReadOnly = true;
         }
 
         private void frmMain_Load(object sender, EventArgs e)
         {
             MessageBox.Show("What Are You Doing Here!!");
+
+            this.Size = new Size(900,500);
+            this.StartPosition = FormStartPosition.Manual;
             int x=340, y=40;
             lblNameError.Location= new Point(x-15, y-30);
             txtName.Location = new Point(x, y);
@@ -62,9 +162,15 @@ namespace WindowsFormsApp1
             personPhone.Location = new Point((x - z), (y*5 - 2));
             perosnAddress.Location = new Point((x - z), (y*7 - 2));
 
+
+            chkbox.Location = new Point(x, (y * 8)+15);
+
+
+            btnExit.Location = new Point(10, 390);
+
         }
         /// <summary>
-        /// 
+        /// This Method On A button with name accepted make a transfare to the second form when clicked and hide the main form.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -119,17 +225,17 @@ namespace WindowsFormsApp1
             This method takes a Control object as a parameter and returns the label control that is associated with it.
             The method assumes that the label is the previous sibling control of the textbox, but you can modify it to fit your specific layout.
          */
-        private Label GetLabelForControl(Control control)
-        {
-            // Assumes that the label is the control with the same name as the textbox, followed by "Error".
-            var labelName = "lbl" + control.Name.Substring(3) + "Error";
-            var label = control.Parent.Controls[labelName] as Label;
-            if (label != null)
-            {
-                return label;
-            }
-            throw new InvalidOperationException("Label not found for control.");
-        }
+        //private Label GetLabelForControl(Control control)
+        //{
+        //    // Assumes that the label is the control with the same name as the textbox, followed by "Error".
+        //    var labelName = "lbl" + control.Name.Substring(3) + "Error";
+        //    var label = control.Parent.Controls[labelName] as Label;
+        //    if (label != null)
+        //    {
+        //        return label;
+        //    }
+        //    throw new InvalidOperationException("Label not found for control.");
+        //}
 
 
         private static readonly Dictionary<string, Regex> regexCache = new Dictionary<string, Regex>();
@@ -169,6 +275,7 @@ namespace WindowsFormsApp1
         {
             // Validate person name before submit
             string userName = txtName.Text;
+            ValidateInput(userName, @"^[a-zA-Z\s]+$", lblNameError);
             //if (!Regex.IsMatch(userName, @"^[a-zA-Z\s]+$"))
             //{
             //    lblNameError.Text = "Please enter a valid name";
@@ -180,7 +287,7 @@ namespace WindowsFormsApp1
             //    lblNameError.Text = "Valid";
             //    lblNameError.ForeColor = Color.GreenYellow;
             //}
-            ValidateInput(userName, @"^[a-zA-Z\s]+$", lblNameError);
+
 
 
             //lblNameError.RightToLeft = RightToLeft.Yes;
@@ -257,8 +364,7 @@ namespace WindowsFormsApp1
 
         private void setForm()
         {
-            this.Size = new Size(900, 500);
-            this.StartPosition = FormStartPosition.Manual;
+
             int x = (Screen.PrimaryScreen.Bounds.Width - this.Width) / 2;
             int y = (Screen.PrimaryScreen.Bounds.Height - this.Height) / 2;
             this.Location = new Point(x, y);
@@ -280,10 +386,6 @@ namespace WindowsFormsApp1
         }
 
 
-        private void lblEmail_Click(object sender, EventArgs e)
-        {
-            txtEmail.Focus();
-        }
         private void lblPhone_Click(object sender, EventArgs e)
         {
             txtEmail.Focus();
@@ -307,6 +409,11 @@ namespace WindowsFormsApp1
         private void perosnAddress_Click(object sender, EventArgs e)
         {
             txtAddress.Focus();
+        }
+
+        private void chkbox_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

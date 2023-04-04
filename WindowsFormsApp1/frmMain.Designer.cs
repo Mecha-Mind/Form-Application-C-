@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.btnSubmit = new System.Windows.Forms.Button();
             this.chkbox = new System.Windows.Forms.CheckBox();
@@ -46,6 +47,8 @@
             this.lblPhoneError = new System.Windows.Forms.Label();
             this.lblAddressError = new System.Windows.Forms.Label();
             this.lblNameError = new System.Windows.Forms.Label();
+            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // btnSubmit
@@ -74,6 +77,7 @@
             this.chkbox.TabIndex = 1;
             this.chkbox.Text = "Swear You Are a human :X";
             this.chkbox.UseVisualStyleBackColor = false;
+            this.chkbox.CheckedChanged += new System.EventHandler(this.chkbox_CheckedChanged);
             // 
             // btnAccept
             // 
@@ -91,6 +95,7 @@
             // 
             // txtName
             // 
+            this.txtName.BackColor = System.Drawing.Color.Gainsboro;
             this.txtName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtName.ForeColor = System.Drawing.Color.Black;
             this.txtName.Location = new System.Drawing.Point(399, 52);
@@ -160,6 +165,7 @@
             // 
             // txtEmail
             // 
+            this.txtEmail.BackColor = System.Drawing.Color.Gainsboro;
             this.txtEmail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtEmail.Location = new System.Drawing.Point(399, 122);
             this.txtEmail.Multiline = true;
@@ -171,6 +177,7 @@
             // 
             // txtPhone
             // 
+            this.txtPhone.BackColor = System.Drawing.Color.Gainsboro;
             this.txtPhone.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtPhone.Location = new System.Drawing.Point(399, 195);
             this.txtPhone.Multiline = true;
@@ -182,6 +189,7 @@
             // 
             // txtAddress
             // 
+            this.txtAddress.BackColor = System.Drawing.Color.Gainsboro;
             this.txtAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtAddress.Location = new System.Drawing.Point(399, 268);
             this.txtAddress.Multiline = true;
@@ -194,58 +202,51 @@
             // lblText
             // 
             this.lblText.AutoSize = true;
-            this.lblText.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblText.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblText.Location = new System.Drawing.Point(392, 385);
             this.lblText.Name = "lblText";
             this.lblText.Padding = new System.Windows.Forms.Padding(10);
-            this.lblText.Size = new System.Drawing.Size(20, 57);
+            this.lblText.Size = new System.Drawing.Size(20, 51);
             this.lblText.TabIndex = 11;
             this.lblText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // btnExit
             // 
             this.btnExit.BackColor = System.Drawing.Color.MidnightBlue;
-            this.btnExit.Location = new System.Drawing.Point(12, 398);
+            this.btnExit.Location = new System.Drawing.Point(12, 394);
             this.btnExit.Name = "btnExit";
             this.btnExit.Padding = new System.Windows.Forms.Padding(10);
-            this.btnExit.Size = new System.Drawing.Size(116, 51);
+            this.btnExit.Size = new System.Drawing.Size(41, 55);
             this.btnExit.TabIndex = 12;
-            this.btnExit.Text = "Exit";
+            this.btnExit.Text = "X";
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
             // lblEmailError
             // 
             this.lblEmailError.AccessibleName = "";
-            this.lblEmailError.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblEmailError.AutoSize = true;
             this.lblEmailError.Location = new System.Drawing.Point(675, 95);
             this.lblEmailError.Name = "lblEmailError";
             this.lblEmailError.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lblEmailError.Size = new System.Drawing.Size(0, 24);
             this.lblEmailError.TabIndex = 13;
-            this.lblEmailError.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lblEmailError.Click += new System.EventHandler(this.lblEmail_Click);
             // 
             // lblPhoneError
             // 
-            this.lblPhoneError.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblPhoneError.AutoSize = true;
             this.lblPhoneError.Location = new System.Drawing.Point(675, 174);
             this.lblPhoneError.Name = "lblPhoneError";
             this.lblPhoneError.Size = new System.Drawing.Size(0, 24);
             this.lblPhoneError.TabIndex = 13;
-            this.lblPhoneError.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // lblAddressError
             // 
-            this.lblAddressError.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblAddressError.AutoSize = true;
             this.lblAddressError.Location = new System.Drawing.Point(675, 247);
             this.lblAddressError.Name = "lblAddressError";
             this.lblAddressError.Size = new System.Drawing.Size(0, 24);
             this.lblAddressError.TabIndex = 13;
-            this.lblAddressError.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // lblNameError
             // 
@@ -254,6 +255,10 @@
             this.lblNameError.Name = "lblNameError";
             this.lblNameError.Size = new System.Drawing.Size(0, 24);
             this.lblNameError.TabIndex = 14;
+            // 
+            // errorProvider
+            // 
+            this.errorProvider.ContainerControl = this;
             // 
             // frmMain
             // 
@@ -290,6 +295,7 @@
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.Move += new System.EventHandler(this.frmMain_Move);
             this.Resize += new System.EventHandler(this.frmMain_Resize);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -314,6 +320,7 @@
         private System.Windows.Forms.Label lblPhoneError;
         private System.Windows.Forms.Label lblAddressError;
         private System.Windows.Forms.Label lblNameError;
+        private System.Windows.Forms.ErrorProvider errorProvider;
     }
 }
 
